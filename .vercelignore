@@ -1,0 +1,7 @@
+# Publish the media and font licences used by the current website.
+assets/*
+!assets/mark.svg
+!assets/dm-sans.woff2
+!assets/dm-sans-LICENSE.txt
+!assets/case-*.webp
+!assets/delivery-review.webp

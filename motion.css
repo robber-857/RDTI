@@ -1,0 +1,108 @@
+/* Normal document flow is the static and reduced-motion version of this page. */
+@media screen and (prefers-reduced-motion: no-preference) {
+  .scroll-sequence main {
+    --heading-lift: clamp(56px, 9vh, 100px);
+    --panel-lift: clamp(105px, 17vh, 188px);
+    --sheet-slide: clamp(64px, 9vw, 150px);
+    --deck-peek: 20px;
+  }
+
+  .hero-headline-in .hero-copy h1 .line > span {
+    animation: headline-enter 450ms cubic-bezier(.2,.72,.25,1) var(--line-delay, 0ms) both;
+  }
+  .hero-headline-in .line:nth-child(2) { --line-delay: 55ms; }
+  .hero-headline-in .line:nth-child(3) { --line-delay: 110ms; }
+  @keyframes headline-enter {
+    from { opacity: .65; transform: translateY(7px); }
+    to   { opacity: 1; transform: none; }
+  }
+
+  .scroll-sequence :is(.economics-intro, .delivery-intro > h2) {
+    translate: 0 calc(var(--arrival, 0) * var(--heading-lift));
+    opacity: calc(1 - var(--arrival, 0) * .28);
+  }
+  .scroll-sequence .economics .panel-stage { min-width: 0; }
+
+  /* Measure the still wrapper; animate just the financial statement inside it. */
+  .scroll-sequence .economics { overflow: clip; }
+  .scroll-sequence .budget-sheet {
+    transform:
+      perspective(1000px)
+      translateX(calc(var(--entry, 0) * var(--sheet-slide)))
+      translateY(calc(var(--entry, 0) * var(--panel-lift) * .63))
+      rotateY(calc(var(--entry, 0) * -17deg))
+      rotateX(calc(var(--entry, 0) * 10deg))
+      scale(calc(1 - var(--entry, 0) * .08));
+    transform-origin: 55% 15%;
+  }
+
+  /* Each later card physically covers the previous one, leaving its top edge visible. */
+  .scroll-sequence .delivery-steps {
+    isolation: isolate;
+    display: grid;
+    gap: clamp(24px, 5vh, 62px);
+    padding-bottom: clamp(30px, 8vh, 92px);
+    border: 0;
+  }
+  .scroll-sequence .delivery-step {
+    --card-index: 0;
+    display: grid;
+    align-content: center;
+    min-height: clamp(144px, 22vh, 214px);
+    padding: clamp(21px, 2.4vw, 38px);
+    border: 1px solid #cbd7ec;
+    border-radius: 12px;
+    color: var(--ink);
+    background: #f6f8fd;
+    box-shadow: 0 12px 32px -24px #273e75;
+    transform-origin: center top;
+  }
+  .scroll-sequence .delivery-step:nth-child(2) { --card-index: 1; background: #edf3ff; }
+  .scroll-sequence .delivery-step:nth-child(3) { --card-index: 2; background: #e3ecff; }
+  .scroll-sequence .deck-enabled .delivery-step {
+    position: sticky;
+    top: calc(var(--nav-h) + 12px + var(--card-index) * var(--deck-peek));
+    z-index: calc(1 + var(--card-index));
+    scale: calc(1 - var(--covered, 0) * .065);
+  }
+  .scroll-sequence .delivery-step > div,
+  .scroll-sequence .delivery-step::before {
+    translate: 0 calc(var(--step-entry, 0) * 55px);
+    opacity: calc(1 - var(--step-entry, 0) * .48);
+  }
+  .scroll-sequence .closing {
+    clip-path: inset(0 calc(var(--arrival, 0) * 15%) 0 round calc(var(--arrival, 0) * 46px));
+  }
+  .scroll-sequence .closing-inner {
+    translate: 0 calc(var(--arrival, 0) * var(--panel-lift) * .56);
+    scale: calc(1 - var(--arrival, 0) * .285);
+    opacity: calc(1 - var(--arrival, 0) * .26);
+  }
+
+  .scroll-sequence :is(.budget-sheet,.economics-intro,.closing-inner):has(:focus-visible) {
+    translate: none;
+    rotate: none;
+    scale: none;
+    transform: none;
+    opacity: 1;
+  }
+  .scroll-sequence .closing:has(:focus-visible) { clip-path: none; }
+}
+
+@media screen and (min-width: 901px) and (min-height: 640px) and (prefers-reduced-motion: no-preference) {
+  .scroll-sequence .deck-enabled .delivery-intro {
+    position: sticky;
+    top: var(--intro-pin, var(--nav-h));
+  }
+}
+
+@media screen and (max-width: 760px), screen and (max-height: 560px) {
+  .scroll-sequence main {
+    --heading-lift: 42px;
+    --panel-lift: clamp(70px, 12vh, 105px);
+    --sheet-slide: clamp(32px, 8vw, 64px);
+    --deck-peek: 12px;
+  }
+  .scroll-sequence .delivery-steps { gap: 20px; padding-bottom: 22px; }
+  .scroll-sequence .closing { clip-path: inset(0 calc(var(--arrival, 0) * 9%) 0 round calc(var(--arrival, 0) * 24px)); }
+}

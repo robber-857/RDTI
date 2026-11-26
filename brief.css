@@ -1,0 +1,88 @@
+.project-brief-open { overflow: hidden; }
+
+#project-brief-dialog {
+  box-sizing: border-box;
+  width: min(590px, calc(100% - 32px));
+  max-width: none;
+  max-height: calc(100vh - 32px);
+  max-height: calc(100dvh - 32px);
+  padding: 0;
+  margin: auto;
+  color: var(--ink);
+  background: #ffffff;
+  border: 1px solid #d8e0ee;
+  border-radius: 14px;
+  box-shadow: 0 24px 100px rgba(17, 28, 54, .18);
+  overflow: auto;
+  overscroll-behavior: contain;
+  text-align: left;
+  line-height: 1.5;
+  font: inherit;
+}
+#project-brief-dialog:not([open]), #project-brief-dialog [hidden] { display: none !important; }
+#project-brief-dialog::backdrop { background: rgba(14, 29, 58, .44); backdrop-filter: blur(5px); }
+#project-brief-dialog[open] { animation: pb-arrive .24s cubic-bezier(.22,.75,.25,1) both; }
+#project-brief-dialog *, #project-brief-dialog *::after { box-sizing: border-box; }
+#project-brief-dialog .pb-wrap { padding: clamp(22px, 5vw, 36px); }
+#project-brief-dialog .pb-head { position: static; display: flex; align-items: center; justify-content: space-between; gap: 10px; height: auto; width: auto; padding: 0; background: transparent; border: 0; }
+#project-brief-dialog h2 { margin: 0; font-family: inherit; font-size: clamp(26px, 5vw, 34px); font-weight: 600; line-height: 1.13; letter-spacing: -.045em; color: var(--ink); }
+#project-brief-dialog h2:focus { outline: none; }
+#project-brief-dialog button { display: inline-flex; justify-content: center; align-items: center; flex: none; font: inherit; line-height: 1.25; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+#project-brief-dialog .pb-close { width: 42px; height: 42px; margin-right: -8px; border: 0; border-radius: 8px; background: transparent; color: var(--body); }
+#project-brief-dialog .pb-close:hover, #project-brief-dialog .pb-edit:hover { color: var(--accent); background: #edf2ff; }
+#project-brief-dialog .pb-intro { margin: 9px 0 23px; color: var(--body); font-size: 14px; line-height: 1.55; }
+#project-brief-dialog .pb-fields { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 14px 16px; margin: 0; padding: 0; border: 0; min-width: 0; }
+#project-brief-dialog .pb-wide { grid-column: 1 / -1; }
+#project-brief-dialog .pb-trap { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); pointer-events: none; }
+#project-brief-dialog .pb-field { min-width: 0; display: grid; gap: 5px; }
+#project-brief-dialog label { display: flex; align-items: baseline; gap: 8px; margin: 0; font-size: 13px; font-weight: 620; letter-spacing: 0; color: var(--ink); }
+#project-brief-dialog .pb-optional { color: var(--body); font-size: 11px; font-weight: 400; }
+#project-brief-dialog input, #project-brief-dialog select, #project-brief-dialog .pb-field textarea {
+  width: 100%; min-width: 0; min-height: 44px; padding: 11px 13px; margin: 0;
+  font: inherit; font-size: 14px; line-height: 1.45; color: var(--ink); background: #fff;
+  border: 1px solid #b6c1d4; border-radius: 8px; box-shadow: none;
+}
+#project-brief-dialog input::placeholder, #project-brief-dialog textarea::placeholder, #project-brief-dialog select:invalid { color: #56667c; opacity: 1; }
+#project-brief-dialog .pb-select { position: relative; }
+#project-brief-dialog select { appearance: none; padding-right: 36px; cursor: pointer; }
+#project-brief-dialog .pb-select svg { position: absolute; top: 50%; right: 13px; transform: translateY(-50%); pointer-events: none; }
+#project-brief-dialog .pb-field textarea { resize: vertical; min-height: 64px; }
+#project-brief-dialog :is(input, select, textarea):focus { border-color: var(--accent); outline: 2px solid #9eb6ee; outline-offset: 1px; }
+#project-brief-dialog button:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+#project-brief-dialog [aria-invalid="true"] { border-color: #b22e36; }
+#project-brief-dialog .pb-error { color: #96222a; font-size: 12px; line-height: 1.4; }
+#project-brief-dialog .pb-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-top: 20px; }
+#project-brief-dialog .pb-actions button { min-height: 44px; padding: 11px 15px; border-radius: 8px; font-weight: 600; font-size: 13px; transition: background .17s, border-color .17s; }
+#project-brief-dialog .pb-actions .pb-primary { gap: 12px; border: 1px solid var(--accent); background: var(--accent); color: #fff; }
+#project-brief-dialog .pb-actions .pb-primary:hover { background: #173796; border-color: #173796; }
+#project-brief-dialog .pb-actions button:disabled { opacity: .65; cursor: wait; }
+#project-brief-dialog .pb-actions .pb-secondary { color: var(--ink); background: #fff; border: 1px solid #b6c1d4; }
+#project-brief-dialog .pb-secondary:hover { background: #edf2ff; border-color: #8295be; }
+#project-brief-dialog .pb-actions .pb-edit { margin-right: auto; padding-inline: 7px; background: transparent; color: var(--body); border: 1px solid transparent; }
+#project-brief-dialog .pb-privacy { display: flex; align-items: flex-start; gap: 7px; margin: 14px 0 0; color: var(--body); font-size: 12px; line-height: 1.55; }
+#project-brief-dialog .pb-privacy svg { margin-top: 2px; flex: 0 0 15px; }
+#project-brief-dialog .pb-summary { display: grid; grid-template-columns: minmax(85px, 34%) minmax(0, 1fr); gap: 0 14px; margin: 0; padding: 2px 0; border-block: 1px solid var(--line); }
+#project-brief-dialog .pb-summary dt, #project-brief-dialog .pb-summary dd { min-width: 0; margin: 0; padding: 9px 0; font-size: 14px; line-height: 1.5; }
+#project-brief-dialog .pb-summary dt { color: var(--body); }
+#project-brief-dialog .pb-summary dd { overflow-wrap: anywhere; white-space: pre-wrap; color: var(--ink); }
+#project-brief-dialog .pb-status { color: var(--accent); margin: 10px 0 0; font-size: 13px; }
+#project-brief-dialog .pb-status:empty { margin: 0; }
+#project-brief-dialog .pb-status.pb-failed { color: #96222a; }
+#project-brief-dialog .pb-hosted { margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--line); }
+#project-brief-dialog .pb-hosted p { margin: 0; color: var(--body); font-size: 13px; line-height: 1.5; }
+#project-brief-dialog .pb-hosted .pb-actions { margin-top: 9px; }
+#project-brief-dialog .pb-clipboard { position: fixed; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
+@keyframes pb-arrive { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+@media (max-width: 600px) {
+  #project-brief-dialog :is(input, select), #project-brief-dialog .pb-field textarea { font-size: 16px; }
+}
+@media (max-width: 470px) {
+  #project-brief-dialog .pb-fields { grid-template-columns: minmax(0,1fr); }
+}
+@media (max-width: 360px) {
+  #project-brief-dialog .pb-wrap { padding: 18px; }
+  #project-brief-dialog .pb-actions { flex-wrap: wrap; }
+}
+@media (prefers-reduced-motion: reduce) {
+  #project-brief-dialog[open], #project-brief-dialog .pb-actions button { animation: none; transition: none; }
+}
